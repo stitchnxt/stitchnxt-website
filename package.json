@@ -1,0 +1,19 @@
+{
+  "name": "stitchnxt-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Marketing website for StitchNXT — Windows desktop software for tailoring, fabric and garment businesses.",
+  "scripts": {
+    "build": "node build.mjs",
+    "preview": "node scripts/serve.mjs",
+    "check": "node scripts/check.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.5.0",
+    "sharp": "^0.34.0"
+  }
+}

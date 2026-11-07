@@ -1,0 +1,33 @@
+CLIENT LOGO CHECKLIST (rewritten on every build)
+Save each logo in public/assets/clients/ using the file name shown (.png, .jpg, .webp or .svg), then rebuild.
+
+[ ] needed      a-lord-and-company.png   ← A Lord & Company
+[ ] needed      aastha-cloth-and-tailor.png   ← Aastha Cloth and Tailor
+[ ] needed      adani-creation.png   ← Adani Creation (2 outlets share it)
+[ ] needed      darji-the-tailor-shop.png   ← Darji - The Tailor Shop
+[ ] needed      ethnix-by-raymond.png   ← Ethnix by Raymond
+[ ] needed      kora-by-nm.png   ← Kora By NM
+[ ] needed      krishna-cloth-and-tailors.png   ← Krishna Cloth & Tailors
+[ ] needed      mangalam-designer-pvt-ltd.png   ← Mangalam Designer Pvt Ltd
+[ ] needed      masterpiece-tailor.png   ← MasterPiece Tailor
+[ ] needed      mourya-fashion-tailors.png   ← Mourya Fashion Tailors
+[ ] needed      mourya-g-premium-fabric-and-custom-tailoring.png   ← Mourya-G Premium Fabric & Custom Tailoring
+[ ] needed      new-india-tailors.png   ← New India Tailors
+[ ] needed      new-mourya-tailor.png   ← New Mourya Tailor
+[ ] needed      pooja-kosti.png   ← Pooja Kosti
+[ ] needed      president-tailor-cloths.png   ← President Tailor Cloths
+[ ] needed      prince-pride.png   ← Prince Pride
+[ ] needed      r-k-garments.png   ← R.K. Garments
+[ ] needed      retro-fashion.png   ← Retro Fashion
+[ ] needed      serenity-reid-and-taylor.png   ← Serenity - Reid & Taylor
+[ ] needed      shreeji-men-s-wear.png   ← Shreeji Men's Wear
+[ ] needed      status-fashion.png   ← Status Fashion (4 outlets share it)
+[ ] needed      steel-lifestyle.png   ← Steel Lifestyle
+[ ] needed      stitch-point.png   ← Stitch Point
+[ ] needed      stitch-world.png   ← Stitch World
+[ ] needed      stitching-story.png   ← Stitching Story (2 outlets share it)
+[ ] needed      tailors-point.png   ← Tailors Point (3 outlets share it)
+[ ] needed      the-destiny-cloth-shop.png   ← The Destiny Cloth Shop
+[ ] needed      the-raymond-shop.png   ← The Raymond Shop (7 outlets share it)
+[ ] needed      the-stitching-studio.png   ← The Stitching Studio
+[ ] needed      white-collar-by-sachin.png   ← White Collar By Sachin
