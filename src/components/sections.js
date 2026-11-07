@@ -290,14 +290,14 @@ export function gettingStarted() {
 }
 
 /* ------------------------------------------------------------------- FAQ */
-export function faqSection() {
-  return `<section class="section" aria-labelledby="faq-title">
+export function faqSection(list = faqs, { prefix = 'faq', eyebrow = 'FAQ', heading = 'Frequently Asked <span class="accent">Questions.</span>', id = 'faq-title' } = {}) {
+  return `<section class="section" aria-labelledby="${id}">
   <div class="container container--narrow">
-    ${sectionHead({ eyebrow: 'FAQ', title: 'Frequently Asked <span class="accent">Questions.</span>' }).replace('<h2>', '<h2 id="faq-title">')}
+    ${sectionHead({ eyebrow, title: heading }).replace('<h2>', `<h2 id="${id}">`)}
     <div class="faq" data-faq>
-      ${faqs.map(([q, a], n) => `<div class="faq__item">
-        <h3><button type="button" class="faq__q" id="faq-q-${n}" aria-expanded="false" aria-controls="faq-a-${n}">${esc(q)}<span class="faq__chev">${icon('LuChevronDown', 22)}</span></button></h3>
-        <div class="faq__a" id="faq-a-${n}" role="region" aria-labelledby="faq-q-${n}"><div><p>${esc(a)}</p></div></div>
+      ${list.map(([q, a], n) => `<div class="faq__item">
+        <h3><button type="button" class="faq__q" id="${prefix}-q-${n}" aria-expanded="false" aria-controls="${prefix}-a-${n}">${esc(q)}<span class="faq__chev">${icon('LuChevronDown', 22)}</span></button></h3>
+        <div class="faq__a" id="${prefix}-a-${n}" role="region" aria-labelledby="${prefix}-q-${n}"><div><p>${esc(a)}</p></div></div>
       </div>`).join('')}
     </div>
   </div>

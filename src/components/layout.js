@@ -8,9 +8,10 @@ export const NAV = [
   ['Home', '/'],
   ['Features', '/features/'],
   ['Solutions', '/solutions/'],
-  ['Product Tour', '/product-tour/'],
   // The "Our Clients" link only appears while there is at least one client to show (src/data/clients.js).
   ...(hasClients ? [['Our Clients', '/#clients']] : []),
+  ['Product Tour', '/product-tour/'],
+  ['Pricing', '/pricing/'],
   ['About Us', '/about/'],
   ['Contact Us', '/contact/'],
 ];
@@ -52,11 +53,20 @@ export function contactItem(kind, { asLink = true } = {}) {
     address: { icon: 'LuMapPin', value: c.address, href: '', ph: 'Business address – add in site config' },
   };
   const d = defs[kind];
+  // The business address stays hidden until one is entered in site config.
+  if (kind === 'address' && !d.value) return '';
   const body = d.value
     ? d.href && asLink ? `<a href="${esc(d.href)}"${kind === 'whatsapp' ? ' target="_blank" rel="noopener"' : ''}>${esc(d.value)}</a>` : `<span>${esc(d.value)}</span>`
     : `<span class="placeholder">[${d.ph}]</span>`;
   return `<li>${icon(d.icon, 18)}${body}</li>`;
 }
+
+export const SOCIAL_DEFS = [
+    ['facebook', 'LuFacebook', 'Facebook'],
+    ['instagram', 'LuInstagram', 'Instagram'],
+    ['youtube', 'LuYoutube', 'YouTube'],
+    ['linkedin', 'LuLinkedin', 'LinkedIn'],
+];
 
 function socialLinks() {
   const defs = [

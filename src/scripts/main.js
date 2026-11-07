@@ -22,7 +22,7 @@
     toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
     menu.addEventListener('click', (e) => { if (e.target.closest('a')) setOpen(false); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menu.classList.contains('is-open')) { setOpen(false); toggle.focus(); } });
-    window.matchMedia('(min-width: 1180px)').addEventListener('change', (e) => e.matches && setOpen(false));
+    window.matchMedia('(min-width: 1280px)').addEventListener('change', (e) => e.matches && setOpen(false));
   }
 
   /* ---------- Reveal on scroll ---------- */
@@ -264,10 +264,57 @@
     } else if (mapMsg) mapMsg.textContent = 'Map unavailable.';
   }
 
+  /* ---------- Pricing: comparison table (highlight / filter) ---------- */
+  const cmp = $('[data-compare-root]');
+  if (cmp) {
+    const table = $('table', cmp);
+    const chips = $$('[data-plan-filter]', cmp);
+    const heads = $$('[data-plan-col]', cmp);
+    const statusEl = $('[data-compare-status]', cmp);
+    const cols = [...new Set($$('thead [data-col]', table).map((e) => e.dataset.col))];
+    const names = Object.fromEntries(heads.map((b) => [b.dataset.planCol, $('span', b).textContent]));
+    const st = { only: 'all', hl: null };
+    function applyCompare() {
+      $$('[data-col]', table).forEach((e) => {
+        e.hidden = st.only !== 'all' && e.dataset.col !== st.only;
+        e.classList.toggle('is-hl', st.hl === e.dataset.col);
+      });
+      const visible = st.only === 'all' ? cols.length : 1;
+      $$('[data-group-row] th', table).forEach((th) => { th.colSpan = visible + 1; });
+      chips.forEach((c) => { const on = c.dataset.planFilter === st.only; c.classList.toggle('is-active', on); c.setAttribute('aria-pressed', String(on)); });
+      heads.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.planCol === st.hl)));
+      cmp.classList.toggle('is-filtered', st.only !== 'all');
+      statusEl.textContent = st.only !== 'all' ? 'Showing the ' + names[st.only] + ' plan only.'
+        : st.hl ? 'Showing all ' + cols.length + ' plans. ' + names[st.hl] + ' is highlighted.'
+        : 'Showing all ' + cols.length + ' plans. Select a plan name in the table to highlight its column.';
+    }
+    chips.forEach((c) => c.addEventListener('click', () => { st.only = c.dataset.planFilter; if (st.only !== 'all') st.hl = null; applyCompare(); }));
+    heads.forEach((b) => b.addEventListener('click', () => { st.hl = st.hl === b.dataset.planCol ? null : b.dataset.planCol; st.only = 'all'; applyCompare(); }));
+    $$('[data-compare-plan]').forEach((a) => a.addEventListener('click', () => { st.only = 'all'; st.hl = a.dataset.comparePlan; applyCompare(); }));
+    applyCompare();
+  }
+
   /* ---------- Enquiry form ---------- */
   const form = $('#enquiry-form');
   if (form) {
     const status = $('#form-status');
+    /* "Request This Plan" links arrive as /contact/?plan=<id>#enquiry and pre-select that plan */
+    const planSel = form.elements.plan;
+    const planNote = $('[data-plan-note]');
+    const showPlan = () => {
+      if (!planNote) return;
+      const v = planSel && planSel.value;
+      planNote.hidden = !v || v === 'Not sure yet';
+      if (!planNote.hidden) $('span', planNote).textContent = 'Selected plan: ' + v;
+    };
+    if (planSel) {
+      let q = '';
+      try { q = new URLSearchParams(window.location.search).get('plan') || ''; } catch (e) { q = ''; }
+      const opt = q && [...planSel.options].find((o) => o.dataset.planId === q);
+      if (opt) planSel.value = opt.value;
+      planSel.addEventListener('change', showPlan);
+      showPlan();
+    }
     const say = (msg, kind) => { status.textContent = msg; status.className = 'form-status is-' + kind; status.focus(); };
     const rules = {
       fullName: (v) => (v.trim().length < 2 ? 'Please enter your full name.' : ''),
@@ -302,7 +349,7 @@
       const lines = [
         'StitchNXT demo enquiry',
         'Name: ' + d.fullName, 'Business: ' + d.businessName, 'Business type: ' + d.businessType,
-        'Mobile: ' + d.mobile, 'Email: ' + (d.email || '-'), 'City: ' + (d.city || '-'), 'Message: ' + (d.message || '-'),
+        'Plan: ' + (d.plan || '-'), 'Mobile: ' + d.mobile, 'Email: ' + (d.email || '-'), 'City: ' + (d.city || '-'), 'Message: ' + (d.message || '-'),
       ].join('\n');
       const { endpoint, whatsapp, email } = form.dataset;
       try {

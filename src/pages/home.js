@@ -1,5 +1,6 @@
 import site from '../config/site.js';
 import { clientsSection } from '../components/clients.js';
+import { homePricingPreview } from '../components/pricing.js';
 import { hero, highlightStrip, industryCards, coreFeatures, tailoringShowcase, inventoryShowcase, accountsShowcase, whyChoose, screenshotShowcase, gettingStarted, faqSection, faqJsonLd, finalCta } from '../components/sections.js';
 
 export default function home() {
@@ -18,12 +19,12 @@ export default function home() {
         description: 'Windows desktop management software for tailoring shops, fabric shops and garment businesses.',
         url: site.siteUrl + '/',
       },
-      { '@context': 'https://schema.org', '@type': 'Organization', name: 'StitchNXT', url: site.siteUrl + '/', logo: site.siteUrl + '/assets/stitchnxt-logo.png' },
+      { '@context': 'https://schema.org', '@type': 'Organization', name: 'StitchNXT', url: site.siteUrl + '/', logo: site.siteUrl + '/assets/stitchnxt-logo.png', sameAs: Object.values(site.social).filter(Boolean) },
       faqJsonLd(),
     ],
     body: [
       hero(), highlightStrip(), industryCards(), coreFeatures(), tailoringShowcase(),
-      inventoryShowcase(), accountsShowcase(), whyChoose(), clientsSection(), screenshotShowcase(),
+      inventoryShowcase(), accountsShowcase(), whyChoose(), clientsSection(), screenshotShowcase(), homePricingPreview(),
       gettingStarted(), faqSection(), finalCta(),
     ].join('\n'),
   };

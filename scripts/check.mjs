@@ -12,7 +12,7 @@ const PORT = 4199;
 const srv = spawn('node', [path.join(ROOT, 'scripts/serve.mjs')], { env: { ...process.env, PORT }, stdio: 'ignore' });
 await new Promise((r) => setTimeout(r, 800));
 const base = `http://localhost:${PORT}`;
-const pages = ['/', '/features/', '/solutions/', '/product-tour/', '/about/', '/contact/', '/privacy-policy/', '/terms-and-conditions/', '/404.html'];
+const pages = ['/', '/features/', '/solutions/', '/product-tour/', '/pricing/', '/about/', '/contact/', '/privacy-policy/', '/terms-and-conditions/', '/404.html'];
 const sizes = [['desktop', 1440, 900], ['laptop', 1100, 800], ['tablet', 820, 1100], ['mobile', 375, 812], ['small', 320, 700]];
 const shots = process.env.SHOTS;
 if (shots) fs.mkdirSync(shots, { recursive: true });
@@ -64,7 +64,7 @@ for (const p of pages) {
   if (!info.desc || !info.canon) problems.push(`${p} missing description/canonical`);
   for (const h of info.links) {
     if (/^(https?:|mailto:|tel:)/.test(h)) continue;
-    const [u, hash] = h.split('#');
+    const [uq, hash] = h.split('#'); const u = uq.split('?')[0];
     const target = u || p;
     const f = path.join(ROOT, 'dist', target.endsWith('/') ? target + 'index.html' : target);
     if (!fs.existsSync(f)) { problems.push(`${p} broken link ${h}`); continue; }

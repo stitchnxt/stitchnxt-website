@@ -33,9 +33,9 @@ export default {
   // SOCIAL LINKS — full URLs. Empty ones are not rendered as links.
   // ---------------------------------------------------------
   social: {
-    facebook: '',
-    instagram: '',
-    youtube: '',
+    facebook: 'https://www.facebook.com/profile.php?id=61574092221789',
+    instagram: 'https://www.instagram.com/stitchnxt_official/',
+    youtube: 'https://www.youtube.com/@stitchnxt',
     linkedin: '',
   },
 
@@ -58,6 +58,14 @@ export default {
    * in src/pages/legal.js.
    */
   legalReviewed: false,
+
+  /**
+   * Pricing page: prices and feature allocation live in src/data/pricing.js.
+   * While false, the Pricing page shows a "Preview – not final" banner, is marked noindex and is
+   * left out of sitemap.xml. Set to true only after the real prices and the feature allocation
+   * for every plan have been entered and approved.
+   */
+  pricingReviewed: false,
 
   /**
    * Show each client's locality (e.g. "C.G. Road") in small text on its card.

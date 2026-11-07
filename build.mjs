@@ -17,6 +17,8 @@ import about from './src/pages/about.js';
 import contact from './src/pages/contact.js';
 import { privacy, terms } from './src/pages/legal.js';
 import notFound from './src/pages/notfound.js';
+import pricing from './src/pages/pricing.js';
+import { warnings as pricingWarnings, pendingReport } from './src/data/pricingModel.js';
 import { warnings as clientWarnings, logoChecklist, stats as clientStats, hiddenCount } from './src/data/clientsModel.js';
 
 const ROOT = import.meta.dirname;
@@ -63,7 +65,7 @@ for (const [src, out, loader] of [['src/styles/main.css', 'assets/css/main.css',
 }
 
 /* ---------- pages ---------- */
-const pages = [home(), features(), solutions(), tour(), about(), contact(), privacy(), terms(), notFound()];
+const pages = [home(), features(), solutions(), tour(), about(), pricing(), contact(), privacy(), terms(), notFound()];
 for (const p of pages) {
   const file = p.path === '/' ? 'index.html' : p.path.endsWith('.html') ? p.path.slice(1) : p.path.slice(1) + 'index.html';
   w(path.join(DIST, file), layout(p));
@@ -86,5 +88,9 @@ w(path.join(ROOT, 'clients-logo-checklist.txt'),
   list.map((b) => `${b.has ? '[x] have logo ' : '[ ] needed     '} ${b.slug}.png   ← ${b.name}${b.n > 1 ? ` (${b.n} outlets share it)` : ''}`).join('\n') + '\n');
 console.log(`Clients: ${clientStats.clients} outlets · ${clientStats.cities} cities · ${clientStats.states} Indian states · ${clientStats.countries} countries${hiddenCount ? ` · ${hiddenCount} hidden` : ''} · logos found for ${list.filter((b) => b.has).length}/${list.length} brands`);
 [...new Set(clientWarnings)].forEach((m) => console.warn('! ' + m));
+
+pendingReport().forEach((m) => console.warn('! PRICING: ' + m));
+[...new Set(pricingWarnings)].forEach((m) => console.warn('! PRICING: ' + m));
+if (!site.pricingReviewed) console.warn('! PRICING page is in PREVIEW mode (noindex, not in sitemap). Set pricingReviewed: true in src/config/site.js when approved.');
 
 console.log(`Built ${pages.length} pages → dist/ (${esbuild ? 'minified' : 'unminified'}) · siteUrl: ${site.siteUrl}`);

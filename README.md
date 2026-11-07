@@ -35,6 +35,8 @@ SITE_URL=https://www.yourdomain.com npm run build
 | Clients (add / edit / hide) | `src/data/clients.js` (one line per client; `showOnWebsite: false` hides one without deleting) |
 | Client logos | drop files in `public/assets/clients/` — exact file names are listed in `clients-logo-checklist.txt` (rewritten on every build) |
 | Map coordinates for a new city | one line in `src/data/locations.js` |
+| Prices, plan names/descriptions, which features each plan includes | `src/data/pricing.js` (everything on the Pricing page, homepage plan preview and the enquiry form's plan list comes from it) |
+| Pricing FAQ answers | `src/content/pricingFaq.js` |
 | Logo | replace `public/assets/stitchnxt-logo.png`; favicon, Apple icon and social-share image regenerate on the next build |
 
 ## Before publishing — checklist
@@ -61,3 +63,12 @@ SITE_URL=https://www.yourdomain.com npm run build
 - **Map**: Leaflet 1.9.4 (from cdnjs) with OpenStreetMap tiles, loaded only when the map nears the screen. No API key or paid service is needed. OpenStreetMap's tile server is meant for light use; for very high traffic, switch the tile URL in `src/scripts/main.js` to a provider you have an account with. If the map cannot load, the filters, location list and directory still work.
 - Nearby cities are merged into one count pin on the map; clicking it zooms in. Markers show cities only, never shop addresses.
 - Make sure you have permission to show each client's name and logo.
+
+## Pricing (Pricing page + homepage "Plans" preview)
+
+- **One source of truth:** `src/data/pricing.js`. The seven grouped plan cards, the 22-feature comparison table, the homepage preview and the "Interested Plan" dropdown in the enquiry form are all generated from it.
+- **Prices:** set `monthlyPrice` (a plain number, e.g. `999`) per plan. The annual amount is shown as monthly x 12 unless you set a separately approved `annualPrice`, which then wins. Leave `null` and a marked placeholder is shown. Every plan is shown as "per month, billed annually"; nothing implies monthly payment. Change `currency` for other currencies.
+- **Features:** each plan has one entry per feature: `true` (included), `false` (not included) or `null` (not confirmed yet). `null` is never treated as included and shows "TBC" in the table. Feature names, order and grouping are in `featureGroups` in the same file. A `hint` per feature adds an optional tooltip (empty by default).
+- **Preview mode:** until `pricingReviewed: true` is set in `src/config/site.js`, the Pricing page shows a "Preview - not final" banner, is `noindex` and is left out of `sitemap.xml`. `npm run build` prints what is still unconfirmed.
+- **Plan selection:** every "Request This Plan" button links to `/contact/?plan=<plan id>#enquiry`, which pre-selects that plan in the form; the chosen plan is included in the WhatsApp/e-mail/endpoint payload.
+- **Comparison table:** click a plan name to highlight its column, or use the plan chips to show a single plan (best on phones). On small screens the table also scrolls sideways with the feature column pinned.

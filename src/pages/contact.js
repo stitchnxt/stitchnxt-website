@@ -1,7 +1,9 @@
 import site from '../config/site.js';
 import { esc, icon, whatsappUrl } from '../components/ui.js';
 import { pageHero } from '../components/sections.js';
-import { contactItem } from '../components/layout.js';
+import { contactItem, SOCIAL_DEFS } from '../components/layout.js';
+import { optionLabel } from '../components/pricing.js';
+import { plans } from '../data/pricingModel.js';
 
 const TYPES = ['Tailoring Shop', 'Fabric Shop', 'Garment Shop', 'Combined Business', 'Other'];
 
@@ -24,6 +26,7 @@ export default function contactPage() {
             and handled by src/scripts/main.js → "FORM DELIVERY". Until one is set, the form validates
             but tells the visitor it is not yet connected (it never pretends to send).
           -->
+          <p class="plan-selected" data-plan-note hidden role="status">${icon('LuCheck', 18)}<span></span></p>
           <form id="enquiry-form" novalidate data-endpoint="${esc(site.formEndpoint)}" data-whatsapp="${esc(site.contact.whatsapp.replace(/\D/g, ''))}" data-email="${esc(site.contact.email)}">
             <div class="form-grid">
               ${field('fullName', 'Full Name', 'autocomplete="name"')}
@@ -33,6 +36,8 @@ export default function contactPage() {
               ${field('mobile', 'Mobile Number', 'autocomplete="tel" inputmode="tel"', true, 'tel')}
               ${field('email', 'Email Address', 'autocomplete="email" inputmode="email"', false, 'email')}
               ${field('city', 'City', 'autocomplete="address-level2"', false)}
+              <div class="field field--full"><label for="plan">Interested Plan <span class="opt">(optional)</span></label>
+                <select id="plan" name="plan"><option value="">Select a plan (optional)</option>${plans.map((p) => `<option value="${esc(optionLabel(p))}" data-plan-id="${esc(p.id)}">${esc(optionLabel(p))}</option>`).join('')}<option value="Not sure yet" data-plan-id="">Not sure yet</option></select></div>
               <div class="field field--full"><label for="message">Message <span class="opt">(optional)</span></label><textarea id="message" name="message" rows="5" placeholder="Tell us about your shop and what you would like to see in the demo."></textarea></div>
             </div>
             <div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
@@ -44,8 +49,8 @@ export default function contactPage() {
           <h2>Contact details</h2>
           <ul class="contact-list">${['email', 'phone', 'whatsapp', 'address'].map((k) => contactItem(k)).join('')}</ul>
           ${wa ? `<a class="btn btn--secondary" href="${esc(wa)}" target="_blank" rel="noopener">${icon('LuMessageCircle', 18)} Chat on WhatsApp</a>` : ''}
-          <h3>Follow us</h3>
-          <p class="placeholder">${Object.values(site.social).some(Boolean) ? Object.entries(site.social).filter(([, v]) => v).map(([k, v]) => `<a href="${esc(v)}" target="_blank" rel="noopener">${k[0].toUpperCase() + k.slice(1)}</a>`).join(' · ') : '[Social media links – add in site config]'}</p>
+          ${SOCIAL_DEFS.some(([k]) => site.social[k]) ? `<h3>Follow us</h3>
+          <ul class="social-pills">${SOCIAL_DEFS.filter(([k]) => site.social[k]).map(([k, ic, label]) => `<li><a href="${esc(site.social[k])}" target="_blank" rel="noopener noreferrer" aria-label="StitchNXT on ${label} (opens in a new tab)">${icon(ic, 18)}<span>${label}</span></a></li>`).join('')}</ul>` : ''}
           <div class="note-box">${icon('LuMonitor', 20)}<p>StitchNXT is Windows desktop software for tailoring, fabric and garment businesses.</p></div>
         </aside>
       </div></section>`,
