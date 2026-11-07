@@ -23,9 +23,9 @@ export default {
   // CONTACT DETAILS — leave '' until confirmed.
   // ---------------------------------------------------------
   contact: {
-    email: '',      // e.g. 'sales@yourdomain.com'
-    phone: '',      // e.g. '+91 00000 00000'  (shown as text and tel: link)
-    whatsapp: '',   // digits only with country code, e.g. '910000000000'. When set, WhatsApp buttons appear.
+    email: 'hello@stitchnxt.com',      // e.g. 'sales@yourdomain.com'
+    phone: '+91 94082 30334',      // e.g. '+91 00000 00000'  (shown as text and tel: link)
+    whatsapp: '919408230334',   // digits only with country code, e.g. '910000000000'. When set, WhatsApp buttons appear.
     address: '',    // e.g. 'Shop No., Street, City, State, PIN'
   },
 
