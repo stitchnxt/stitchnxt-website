@@ -65,7 +65,7 @@ export default {
    * left out of sitemap.xml. Set to true only after the real prices and the feature allocation
    * for every plan have been entered and approved.
    */
-  pricingReviewed: false,
+  pricingReviewed: true,
 
   /**
    * Show each client's locality (e.g. "C.G. Road") in small text on its card.

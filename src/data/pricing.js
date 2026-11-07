@@ -176,7 +176,7 @@ const pricing = {
         dashboard: true,
         userRolesPermissions: true,
         customersManagement: true,
-        supplierManagement: false,
+        supplierManagement: true,
         workshopManagement: false,
         // Tailoring Management
         stitchingInvoice: false,
